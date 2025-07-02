@@ -107,7 +107,7 @@ function initializeSocket() {
     
     socket.on("shower_started", function(data) {
         if (data.user_name !== currentUser) {
-            updateShowerStatus("OCUPADO", `Chuveiro em uso por: ${data.user_name} (${data.duration} min)`);
+            updateShowerStatus("OCUPADO", `EM USO, AGUARDE PARA UTILIZAR!`);
             showNotification("Chuveiro Ocupado", data.message, { type: "warning" });
         }
     });
@@ -173,12 +173,12 @@ function startShower() {
     document.getElementById("timer").classList.remove("hidden");
     
     // Desabilitar botão de trocar usuário
-    const changeUserBtn = document.querySelector("button[onclick='logout()']");
+    const changeUserBtn = document.querySelector("button[onclick=\'logout()\']");
     changeUserBtn.disabled = true;
     changeUserBtn.style.opacity = "0.5";
     changeUserBtn.style.cursor = "not-allowed";
     
-    updateShowerStatus("EM USO", `Você está usando (${selectedDuration} min)`);
+    updateShowerStatus("EM USO", `EM USO, AGUARDE PARA UTILIZAR!`);
     
     // Iniciar timer
     startTimer();
@@ -209,7 +209,7 @@ function stopShower() {
     document.getElementById("timer").classList.add("hidden");
     
     // Reabilitar botão de trocar usuário
-    const changeUserBtn = document.querySelector("button[onclick='logout()']");
+    const changeUserBtn = document.querySelector("button[onclick=\'logout()\']");
     changeUserBtn.disabled = false;
     changeUserBtn.style.opacity = "1";
     changeUserBtn.style.cursor = "pointer";
@@ -264,7 +264,7 @@ function updateShowerStatus(status, details) {
     if (status === "EM USO") {
         statusDisplay.classList.add("in-use");
         statusDisplay.style.borderLeftColor = "#FF0000";
-        document.getElementById("showerStatus").textContent = "STATUS: EM USO, AGUARDE PARA UTILIZAR";
+        document.getElementById("showerStatus").textContent = "EM USO, AGUARDE PARA UTILIZAR!";
     } else {
         statusDisplay.classList.remove("in-use");
         statusDisplay.style.borderLeftColor = status === "Disponível" ? "#4CAF50" : "#FF9800";

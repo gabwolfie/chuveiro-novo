@@ -62,7 +62,7 @@ O sistema foi simplificado para remover completamente o sistema de login/cadastr
 4. **Avisos de Tempo**: Notificações aos 2 min, 1 min e 30 seg
 5. **🆕 Exibição do Nome**: Nome do usuário aparece na tela de status
 6. **🆕 Fundo Vermelho**: Tela fica vermelha quando chuveiro está em uso
-7. **🆕 Frase em Maiúsculas**: "STATUS: EM USO, AGUARDE PARA UTILIZAR"
+7. **🆕 Frase em Maiúsculas**: "EM USO, AGUARDE PARA UTILIZAR!"
 8. **🆕 Segurança de Troca**: Só permite trocar usuário quando chuveiro está parado
 
 ## Como Usar
