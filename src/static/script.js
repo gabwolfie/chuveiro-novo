@@ -107,7 +107,7 @@ function initializeSocket() {
     
     socket.on("shower_started", function(data) {
         if (data.user_name !== currentUser) {
-            updateShowerStatus("OCUPADO", `EM USO, AGUARDE PARA UTILIZAR!`);
+            updateShowerStatus("OCUPADO", `EM USO POR ${data.user_name.toUpperCase()}`);
             showNotification("Chuveiro Ocupado", data.message, { type: "warning" });
         }
     });
@@ -116,6 +116,17 @@ function initializeSocket() {
         if (data.user_name !== currentUser) {
             updateShowerStatus("Disponível", "");
             showNotification("Chuveiro Disponível", data.message, { type: "success" });
+        }
+    });
+
+    socket.on("shower_status", function(data) {
+        if (data.occupied) {
+            updateShowerStatus("OCUPADO", `EM USO POR ${data.user_name.toUpperCase()}`);
+            if (currentUser && data.user_name !== currentUser) {
+                showNotification("Chuveiro Ocupado", data.message, { type: "warning" });
+            }
+        } else {
+            updateShowerStatus("Disponível", "");
         }
     });
 }
@@ -164,6 +175,13 @@ function startShower() {
         return;
     }
     
+    // Verificar se o chuveiro já está ocupado por outra pessoa
+    const showerStatusElement = document.getElementById("showerStatus");
+    if (showerStatusElement.textContent.includes("OCUPADO") && !isShowerRunning) {
+        showInAppNotification("Aviso", "O chuveiro já está ocupado por outro usuário. Por favor, aguarde.", "warning");
+        return;
+    }
+
     isShowerRunning = true;
     timeRemaining = selectedDuration * 60; // Converter para segundos
     
@@ -178,7 +196,7 @@ function startShower() {
     changeUserBtn.style.opacity = "0.5";
     changeUserBtn.style.cursor = "not-allowed";
     
-    updateShowerStatus("EM USO", `EM USO, AGUARDE PARA UTILIZAR!`);
+    updateShowerStatus("EM USO", `EM USO POR ${currentUser.toUpperCase()}`);
     
     // Iniciar timer
     startTimer();
@@ -261,10 +279,9 @@ function updateShowerStatus(status, details) {
     
     // Atualizar cor do status e frase
     const statusDisplay = document.getElementById("statusDisplay");
-    if (status === "EM USO") {
+    if (status === "OCUPADO") {
         statusDisplay.classList.add("in-use");
         statusDisplay.style.borderLeftColor = "#FF0000";
-        document.getElementById("showerStatus").textContent = "EM USO, AGUARDE PARA UTILIZAR!";
     } else {
         statusDisplay.classList.remove("in-use");
         statusDisplay.style.borderLeftColor = status === "Disponível" ? "#4CAF50" : "#FF9800";
@@ -315,4 +332,5 @@ stopShower = function() {
     originalStopShower();
     releaseWakeLock();
 };
+
 
