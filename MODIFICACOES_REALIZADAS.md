@@ -2,7 +2,7 @@
 
 ## Resumo das Alterações
 
-O sistema foi simplificado para remover completamente o sistema de login/cadastro que apresentava problemas de persistência. Agora o sistema funciona apenas com o nome do usuário, tornando-o mais simples e confiável.
+O sistema foi simplificado para remover completamente o sistema de login/cadastro que apresentava problemas de persistência. Agora o sistema funciona apenas com o nome do usuário, tornando-o mais simples e confiável. Além disso, foram implementadas melhorias visuais e de segurança conforme solicitado.
 
 ## Principais Modificações
 
@@ -21,6 +21,7 @@ O sistema foi simplificado para remover completamente o sistema de login/cadastr
   2. **Tela do Chuveiro**: Controles de duração e botões de iniciar/parar
 - **Mantido**: Design responsivo e PWA
 - **Adicionado**: Botão "Trocar Usuário" para facilitar mudança de usuário
+- **Adicionado**: Classe CSS `.in-use` para mudança de cor de fundo
 
 ### 3. JavaScript (src/static/script.js)
 - **Removido**: Toda lógica de autenticação e cadastro
@@ -29,6 +30,10 @@ O sistema foi simplificado para remover completamente o sistema de login/cadastr
 - **Adicionado**: Notificações de tempo restante (2 min, 1 min, 30 seg)
 - **Adicionado**: Wake lock para manter tela ativa durante uso
 - **Mantido**: Sistema de notificações em tempo real
+- **NOVO**: Exibição do nome do usuário na tela de status
+- **NOVO**: Frase "STATUS: EM USO, AGUARDE PARA UTILIZAR" em maiúsculas
+- **NOVO**: Fundo vermelho quando chuveiro está em uso
+- **NOVO**: Bloqueio do botão "Trocar Usuário" durante uso do chuveiro
 
 ### 4. Arquivos Removidos
 - `src/routes/user.py` - Rotas de usuário
@@ -55,6 +60,10 @@ O sistema foi simplificado para remover completamente o sistema de login/cadastr
 2. **Trocar Usuário**: Botão para facilitar mudança de usuário
 3. **Wake Lock**: Mantém tela ativa durante uso do chuveiro
 4. **Avisos de Tempo**: Notificações aos 2 min, 1 min e 30 seg
+5. **🆕 Exibição do Nome**: Nome do usuário aparece na tela de status
+6. **🆕 Fundo Vermelho**: Tela fica vermelha quando chuveiro está em uso
+7. **🆕 Frase em Maiúsculas**: "STATUS: EM USO, AGUARDE PARA UTILIZAR"
+8. **🆕 Segurança de Troca**: Só permite trocar usuário quando chuveiro está parado
 
 ## Como Usar
 
@@ -63,9 +72,13 @@ O sistema foi simplificado para remover completamente o sistema de login/cadastr
 3. **Clique em "Entrar"**
 4. **Selecione a duração** desejada (5, 10, 15, 20 ou 30 minutos)
 5. **Clique em "Iniciar Chuveiro"**
+   - A tela ficará **vermelha** com a mensagem **"STATUS: EM USO, AGUARDE PARA UTILIZAR"**
+   - O botão **"Trocar Usuário" ficará desabilitado**
 6. **Acompanhe o timer** e receba notificações de tempo
 7. **Clique em "Parar Chuveiro"** quando terminar
-8. **Use "Trocar Usuário"** se necessário
+   - A tela voltará ao normal
+   - O botão **"Trocar Usuário" será reabilitado**
+8. **Use "Trocar Usuário"** se necessário (apenas quando chuveiro estiver parado)
 
 ## Vantagens da Nova Versão
 
@@ -75,6 +88,9 @@ O sistema foi simplificado para remover completamente o sistema de login/cadastr
 - ✅ **Mais confiável**: Menos pontos de falha
 - ✅ **Mantém funcionalidades**: Timer, notificações e PWA
 - ✅ **Fácil troca de usuário**: Botão dedicado para isso
+- ✅ **🆕 Visual melhorado**: Fundo vermelho e texto claro quando em uso
+- ✅ **🆕 Mais seguro**: Impede troca de usuário durante uso do chuveiro
+- ✅ **🆕 Informativo**: Mostra claramente quem está usando
 
 ## Instalação e Execução
 
